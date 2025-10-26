@@ -138,21 +138,74 @@ npm start
 
 ## ⚙️ **Configuración**
 
+### 🔑 **Configuración de Credenciales (PASO OBLIGATORIO ANTES DE USAR)**
+
+**⚠️ IMPORTANTE**: Este repositorio contiene solo marcadores de posición. Antes de usar el sistema, DEBE configurar las credenciales.
+
+#### **📁 Archivo a Modificar**
+```bash
+src/lib/config.ts
+```
+
+#### **🔧 Pasos para Configurar**
+
+1. **Copiar archivo de ejemplo (opcional)**:
+   ```bash
+   cp src/lib/config.example.ts src/lib/config.ts
+   ```
+
+2. **Abrir el archivo de configuración**:
+   ```bash
+   nano src/lib/config.ts
+   ```
+
+3. **Reemplazar los marcadores de posición**:
+   ```typescript
+   export const DEFAULT_CREDENTIALS = {
+     ADMIN: {
+       identification: 'TU_ID_ADMIN_AQUI',      // Ej: '1123435375'
+       password: 'TU_CONTRASEÑA_ADMIN_AQUI',  // Ej: 'Luisito1280a'
+       name: 'Nombre del Administrador',       // Ej: 'Luis Guzmán'
+       email: 'admin@sena.edu.co'             // Ej: 'luis.guzman@sena.edu.co'
+     },
+     TEACHER: {
+       identification: 'TU_ID_DOCENTE_AQUI',   // Ej: '1116863106'
+       password: 'TU_CONTRASEÑA_DOCENTE_AQUI', // Ej: 'Fredy123@2025'
+       name: 'Nombre del Docente',            // Ej: 'Fredy Martínez'
+       email: 'teacher@sena.edu.co'           // Ej: 'fredy.martinez@sena.edu.co'
+     }
+   }
+   ```
+
+3. **Ejemplo Completo Configurado**:
+   ```typescript
+   export const DEFAULT_CREDENTIALS = {
+     ADMIN: {
+       identification: '1123435375',
+       password: 'Luisito1280a',
+       name: 'Luis Guzmán',
+       email: 'luis.guzman@sena.edu.co'
+     },
+     TEACHER: {
+       identification: '1116863106',
+       password: 'Fredy123@2025',
+       name: 'Fredy Martínez',
+       email: 'fredy.martinez@sena.edu.co'
+     }
+   }
+   ```
+
+#### **🚀 Después de Configurar**
+1. Guardar el archivo `src/lib/config.ts`
+2. Limpiar el localStorage del navegador (F12 → Application → Local Storage → Clear)
+3. Reiniciar el servidor: `npm run dev`
+4. Acceder al sistema con las credenciales configuradas
+
 ### **Variables de Entorno Principales**
 
 ```bash
 # Base de datos
 DATABASE_URL=file:./db/app.db
-
-# Credenciales de administrador
-ADMIN_EMAIL=admin@sena.edu.co
-ADMIN_PASSWORD=Admin123!
-ADMIN_ID=ADMIN001
-
-# Credenciales de docente
-TEACHER_EMAIL=teacher@sena.edu.co
-TEACHER_PASSWORD=Teacher123!
-TEACHER_ID=TEACHER001
 
 # Seguridad
 SESSION_SECRET=tu-secreto-aqui
@@ -176,19 +229,30 @@ LOGIN_LOCKOUT_MINUTES=30
 
 ## 🔐 **Acceso al Sistema**
 
+### **🔑 Credenciales por Defecto**
+
+Las credenciales se configuran en el archivo `src/lib/config.ts`. Los valores por defecto son marcadores de posición que **DEBEN ser reemplazados**:
+
 ### **👨‍💼 Administrador**
+- **Identificación**: `ADMIN_ID_HERE` (configurar en config.ts)
+- **Contraseña**: `ADMIN_PASSWORD_HERE` (configurar en config.ts)
 - **Email**: `admin@sena.edu.co`
-- **Contraseña**: `Admin123!`
-- **Identificación**: `ADMIN001`
 
 ### **👨‍🏫 Docente**
+- **Identificación**: `TEACHER_ID_HERE` (configurar en config.ts)
+- **Contraseña**: `TEACHER_PASSWORD_HERE` (configurar en config.ts)
 - **Email**: `teacher@sena.edu.co`
-- **Contraseña**: `Teacher123!`
-- **Identificación**: `TEACHER001`
 
 ### **🎓 Estudiantes**
 - Los estudiantes son creados por el administrador
 - Cada estudiante recibe credenciales únicas
+
+### **⚠️ Recordatorio Importante**
+- **NO USE** el sistema sin antes configurar las credenciales
+- **NO SUBA** nunca un archivo `config.ts` con credenciales reales a repositorios públicos
+- **LIMPIE** el localStorage después de cambiar las credenciales
+
+> **🔒 Nota de Seguridad**: Este repositorio es seguro para distribución pública. No contiene credenciales reales.
 
 ---
 
@@ -317,12 +381,23 @@ npm run seed:secure
 
 #### **❌ Error: Credenciales incorrectas**
 ```bash
-# Verificar archivo .env
-cat .env | grep ADMIN
-cat .env | grep TEACHER
+# Verificar configuración
+cat src/lib/config.ts
 
-# Recrear usuarios
-npm run seed:secure
+# Asegurarse de que los marcadores de posición fueron reemplazados
+grep -q "ADMIN_ID_HERE" src/lib/config.ts && echo "⚠️ Debes configurar las credenciales"
+
+# Reiniciar el servidor después de cambiar la configuración
+npm run dev
+```
+
+#### **❌ Error: Marcadores de posición no configurados**
+```bash
+# Si ves "ADMIN_ID_HERE" o "TEACHER_ID_HERE" en el login:
+# 1. Edita src/lib/config.ts
+# 2. Reemplaza los marcadores de posición
+# 3. Limpia el localStorage del navegador
+# 4. Reinicia el servidor
 ```
 
 #### **❌ Error: Rate limit exceeded**
@@ -413,6 +488,59 @@ Este proyecto está licenciado bajo la **Licencia MIT** - ver el archivo [LICENS
 - **🌐 GitHub**: [LuferOS](https://github.com/LuferOS)
 - **📧 Email**: nekranmegared@gmail.com
 - **🐦 Twitter**: No poseo
+
+---
+
+## 🔄 **Cambios Recientes (v1.0.0 - Public Repository Version)**
+
+### **✅ Seguridad para Repositorio Público**
+- 🔒 **Eliminación completa de credenciales** del código fuente
+- 🛡️ **Sistema de placeholders seguros** en config.ts
+- 🔐 **Filtro de consola avanzado** para evitar exposición de datos
+- 📝 **Documentación clara** para configuración de credenciales
+- ⚠️ **Advertencias de seguridad** en todo el proyecto
+
+### **🔧 Sistema de Seguridad Implementado**
+- ✅ **Módulo console-security.ts**: Filtrado automático de información sensible
+- ✅ **Configuración obligatoria**: El sistema no funciona sin configurar credenciales
+- ✅ **Validación de entrada**: Detección y filtrado de datos sensibles
+- ✅ **Logs seguros**: Sin exposición de contraseñas o IDs en consola
+
+### **🎨 Funcionalidades Completas**
+- ✅ **Sistema educativo completo**: CRUD para todos los módulos
+- ✅ **Gestión de usuarios**: Administrador, Docente, Estudiante
+- ✅ **Control de acceso**: Basado en roles y permisos
+- ✅ **Interfaz moderna**: shadcn/ui + Tailwind CSS
+- ✅ **Datos persistentes**: Almacenamiento local seguro
+
+### **📋 Configuración Simplificada**
+- 📁 **Un solo archivo**: `src/lib/config.ts`
+- 🔑 **Marcadores de posición**: Claros y fáciles de identificar
+- 📖 **Instrucciones paso a paso**: En README.md
+- 🚀 **Configuración rápida**: 5 minutos para poner en marcha
+
+### **🛠️ Mejoras Técnicas**
+- 📋 **Código limpio**: Pasa todas las validaciones ESLint
+- 🔍 **Sin logs sensibles**: Información filtrada automáticamente
+- 🚀 **Rendimiento optimizado**: Next.js 15 + TypeScript
+- 📦 **Producción lista**: Seguro para despliegue
+
+---
+
+## 📋 **Resumen de Configuración**
+
+### **🔧 Para Empezar a Usar el Sistema**
+1. **Clonar repositorio**: `git clone [URL]`
+2. **Instalar dependencias**: `npm install`
+3. **Configurar credenciales**: Editar `src/lib/config.ts`
+4. **Iniciar sistema**: `npm run dev`
+5. **Acceder**: Usar credenciales configuradas
+
+### **🔒 Para Repositorio Público**
+- ✅ **Seguro**: Sin credenciales reales
+- ✅ **Documentado**: Instrucciones claras
+- ✅ **Protegido**: Filtros de seguridad activos
+- ✅ **Listo**: Para distribución pública
 
 ---
 
