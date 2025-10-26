@@ -163,16 +163,16 @@ src/lib/config.ts
    ```typescript
    export const DEFAULT_CREDENTIALS = {
      ADMIN: {
-       identification: 'TU_ID_ADMIN_AQUI',      // Ej: '1123435375'
-       password: 'TU_CONTRASEÑA_ADMIN_AQUI',  // Ej: 'Luisito1280a'
-       name: 'Nombre del Administrador',       // Ej: 'Luis Guzmán'
-       email: 'admin@sena.edu.co'             // Ej: 'luis.guzman@sena.edu.co'
+       identification: 'TU_ID_ADMIN_AQUI',      // Ej: '112344556677'
+       password: 'TU_CONTRASEÑA_ADMIN_AQUI',  // Ej: 'Luferos24'
+       name: 'Nombre del Administrador',       // Ej: 'LuferOS'
+       email: 'admin@sena.edu.co'             // Ej: 'lufer.os@sena.edu.co'
      },
      TEACHER: {
-       identification: 'TU_ID_DOCENTE_AQUI',   // Ej: '1116863106'
-       password: 'TU_CONTRASEÑA_DOCENTE_AQUI', // Ej: 'Fredy123@2025'
-       name: 'Nombre del Docente',            // Ej: 'Fredy Martínez'
-       email: 'teacher@sena.edu.co'           // Ej: 'fredy.martinez@sena.edu.co'
+       identification: 'TU_ID_DOCENTE_AQUI',   // Ej: '11344555355'
+       password: 'TU_CONTRASEÑA_DOCENTE_AQUI', // Ej: 'Fredy123FNAF'
+       name: 'Nombre del Docente',            // Ej: 'Aguacate Sin sal'
+       email: 'teacher@sena.edu.co'           // Ej: 'Aguacate@sena.edu.co'
      }
    }
    ```
@@ -181,16 +181,16 @@ src/lib/config.ts
    ```typescript
    export const DEFAULT_CREDENTIALS = {
      ADMIN: {
-       identification: '1123435375',
-       password: 'Luisito1280a',
-       name: 'Luis Guzmán',
-       email: 'luis.guzman@sena.edu.co'
+       identification: '11234433',
+       password: 'Luferos1243',
+       name: 'LuferOS',
+       email: 'luferOS@sena.edu.co'
      },
      TEACHER: {
-       identification: '1116863106',
+       identification: '111274774',
        password: 'Fredy123@2025',
-       name: 'Fredy Martínez',
-       email: 'fredy.martinez@sena.edu.co'
+       name: 'Aguacate de Mar',
+       email: 'aguacate@sena.edu.co'
      }
    }
    ```
