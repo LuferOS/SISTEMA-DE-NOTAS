@@ -1,0 +1,200 @@
+// Sistema de Gestión Educativa SENA
+// Schema completo para gestión de cursos, estudiantes, calificaciones, asistencia y tareas
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Usuarios del sistema (Docentes y Estudiantes)
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  name            String
+  identification  String    @unique // Cédula o tarjeta de identidad
+  password        String
+  role            UserRole  @default(STUDENT)
+  phone           String?
+  address         String?
+  avatar          String?
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relaciones
+  teacherCourses  Course[]  @relation("TeacherCourses")
+  enrollments     Enrollment[]
+  grades          Grade[]
+  attendances     Attendance[]
+  taskSubmissions TaskSubmission[]
+  createdTasks    Task[]
+
+  @@map("users")
+}
+
+// Roles de usuario
+enum UserRole {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+// Cursos
+model Course {
+  id          String        @id @default(cuid())
+  name        String
+  code        String        @unique
+  description String?
+  level       String?
+  schedule    String?
+  classroom   String?
+  capacity    Int?
+  isActive    Boolean       @default(true)
+  teacherId   String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relaciones
+  teacher     User          @relation("TeacherCourses", fields: [teacherId], references: [id])
+  enrollments Enrollment[]
+  tasks       Task[]
+  attendances Attendance[]
+  grades      Grade[]
+
+  @@map("courses")
+}
+
+// Matrículas de estudiantes en cursos
+model Enrollment {
+  id         String   @id @default(cuid())
+  studentId  String
+  courseId   String
+  enrolledAt DateTime @default(now())
+  isActive   Boolean  @default(true)
+
+  // Relaciones
+  student    User     @relation(fields: [studentId], references: [id])
+  course     Course   @relation(fields: [courseId], references: [id])
+
+  @@unique([studentId, courseId])
+  @@map("enrollments")
+}
+
+// Tareas/Actividades
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  type        TaskType   @default(ASSIGNMENT)
+  maxScore    Float      @default(100)
+  dueDate     DateTime?
+  courseId    String
+  teacherId   String
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Relaciones
+  course      Course     @relation(fields: [courseId], references: [id])
+  teacher     User       @relation(fields: [teacherId], references: [id])
+  submissions TaskSubmission[]
+  grades      Grade[]
+
+  @@map("tasks")
+}
+
+// Tipos de tareas
+enum TaskType {
+  ASSIGNMENT
+  EXAM
+  PROJECT
+  QUIZ
+  ACTIVITY
+}
+
+// Entregas de tareas
+model TaskSubmission {
+  id          String    @id @default(cuid())
+  taskId      String
+  studentId   String
+  content     String?
+  fileUrl     String?
+  fileName    String?
+  submittedAt DateTime  @default(now())
+  isLate      Boolean   @default(false)
+
+  // Relaciones
+  task        Task      @relation(fields: [taskId], references: [id])
+  student     User      @relation(fields: [studentId], references: [id])
+
+  @@unique([taskId, studentId])
+  @@map("task_submissions")
+}
+
+// Calificaciones
+model Grade {
+  id             String   @id @default(cuid())
+  studentId      String
+  taskId         String?
+  courseId       String
+  score          Float
+  maxScore       Float
+  percentage     Float
+  feedback       String?
+  gradedAt       DateTime @default(now())
+  gradedBy       String?
+  gradingPeriod  String   // Ej: "2024-1", "2024-2"
+  isActive       Boolean  @default(true)
+
+  // Relaciones
+  student        User     @relation(fields: [studentId], references: [id])
+  task           Task?    @relation(fields: [taskId], references: [id])
+  course         Course   @relation(fields: [courseId], references: [id])
+
+  @@map("grades")
+}
+
+// Asistencia
+model Attendance {
+  id         String   @id @default(cuid())
+  studentId  String
+  courseId   String
+  date       DateTime
+  status     AttendanceStatus @default(PRESENT)
+  notes      String?
+  recordedAt DateTime @default(now())
+  recordedBy String?
+
+  // Relaciones
+  student    User     @relation(fields: [studentId], references: [id])
+  course     Course   @relation(fields: [courseId], references: [id])
+
+  @@unique([studentId, courseId, date])
+  @@map("attendances")
+}
+
+// Estados de asistencia
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
+// Archivos del sistema
+model File {
+  id         String   @id @default(cuid())
+  name       String
+  originalName String
+  mimeType   String
+  size       Int
+  path       String
+  uploadedBy String
+  createdAt  DateTime @default(now())
+
+  @@map("files")
+}
