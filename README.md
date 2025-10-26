@@ -341,9 +341,9 @@ chmod 644 .env
 
 ### **📞 Soporte Técnico**
 
-- 📧 **Email**: support@luferos.com
-- 🐛 **Issues**: [GitHub Issues](https://github.com/LuferOS/sena-education-system/issues)
-- 📖 **Documentación**: [Wiki del Proyecto](https://github.com/LuferOS/sena-education-system/wiki)
+- 📧 **Email**: nekranmegared@gmail.com
+- 🐛 **Issues**: [GitHub Issues](https://github.com/LuferOS/SISTEMA-DE-NOTAS/issues)
+- 📖 **Documentación**: en creacion
 
 ---
 
@@ -411,8 +411,8 @@ Este proyecto está licenciado bajo la **Licencia MIT** - ver el archivo [LICENS
 ## 📞 **Contacto**
 
 - **🌐 GitHub**: [LuferOS](https://github.com/LuferOS)
-- **📧 Email**: contact@luferos.com
-- **🐦 Twitter**: [@LuferOS_dev](https://twitter.com/LuferOS_dev)
+- **📧 Email**: nekranmegared@gmail.com
+- **🐦 Twitter**: No poseo
 
 ---
 
