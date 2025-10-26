@@ -87,8 +87,8 @@
 
 ### **Paso 1: Clonar el Repositorio**
 ```bash
-git clone https://github.com/LuferOS/sena-education-system.git
-cd sena-education-system
+git clone https://github.com/LuferOS/SISTEMA-DE-NOTAS.git
+cd SISTEMA-DE-NOTAS
 ```
 
 ### **Paso 2: Instalar Dependencias**
